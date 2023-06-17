@@ -293,11 +293,14 @@ function defineVideoController() {
     var shadowTemplate = `
         <style>
           @import "${chrome.runtime.getURL("shadow.css")}";
+          #controller {
+            --top: ${top}; 
+            --left: ${left};
+            opacity: ${tc.settings.controllerOpacity};
+          }
         </style>
 
-        <div id="controller" style="top:${top}; left:${left}; opacity:${
-      tc.settings.controllerOpacity
-    }">
+        <div id="controller">
           <span data-action="drag" class="draggable">${speed}</span>
           <span id="controls">
             <button data-action="rewind" class="rw">«</button>
@@ -332,12 +335,11 @@ function defineVideoController() {
         true
       );
     });
-
-    shadow
-      .querySelector("#controller")
+    const controller = shadow
+      .querySelector("#controller");
+    controller
       .addEventListener("click", (e) => e.stopPropagation(), false);
-    shadow
-      .querySelector("#controller")
+    controller
       .addEventListener("mousedown", (e) => e.stopPropagation(), false);
 
     this.speedIndicator = shadow.querySelector("span");
@@ -362,6 +364,8 @@ function defineVideoController() {
       case location.hostname == "tv.apple.com":
         // insert after parent for correct stacking context
         this.parent.getRootNode().querySelector(".scrim").prepend(fragment);
+      case location.hostname == "www.netflix.com":
+        controller.classList.add("netflix")
       default:
         // Note: when triggered via a MutationRecord, it's possible that the
         // target is not the immediate parent. This appends the controller as
@@ -550,7 +554,7 @@ function initializeNow(document) {
   var docs = Array(document);
   try {
     if (inIframe()) docs.push(window.top.document);
-  } catch (e) {}
+  } catch (e) { }
 
   docs.forEach(function (doc) {
     doc.addEventListener(

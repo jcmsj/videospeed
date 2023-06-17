@@ -10,8 +10,10 @@
 
 #controller {
   position: absolute;
-  top: 0;
-  left: 0;
+  --top: 0;
+  --left: 0;
+  top: var(--top);
+  left: var(--left);
 
   background: black;
   color: white;
@@ -22,6 +24,12 @@
 
   cursor: default;
   z-index: 9999999;
+}
+
+/* Override for netflix */
+#controller.netflix {
+  --top: 85px;
+  --left: 0px;
 }
 
 #controller:hover {

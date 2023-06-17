@@ -235,13 +235,13 @@ function save_options() {
   ]);
   chrome.storage.sync.set(
     {
-      rememberSpeed: rememberSpeed,
-      forceLastSavedSpeed: forceLastSavedSpeed,
-      audioBoolean: audioBoolean,
-      enabled: enabled,
-      startHidden: startHidden,
-      controllerOpacity: controllerOpacity,
-      keyBindings: keyBindings,
+      rememberSpeed,
+      forceLastSavedSpeed,
+      audioBoolean,
+      enabled,
+      startHidden,
+      controllerOpacity,
+      keyBindings,
       blacklist: blacklist.replace(regStrip, "")
     },
     function () {
